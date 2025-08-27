@@ -9,7 +9,8 @@ ScreenGui.Parent = game.CoreGui
 
 local Frame = Instance.new("Frame")
 Frame.Size = UDim2.new(0,180,0,100)
-Frame.Position = UDim2.new(0,50,0,200)
+-- Sağ üst köşe, biraz sola kaydırılmış
+Frame.Position = UDim2.new(1, -200, 0, 50)
 Frame.BackgroundColor3 = Color3.fromRGB(30,30,30)
 Frame.Parent = ScreenGui
 
@@ -52,42 +53,5 @@ TPButton.MouseButton1Click:Connect(function()
 		hrp.CFrame = CFrame.new(sabitNokta)
 	else
 		print("Önce pozisyon kaydedin!")
-	end
-end)
-
--- Mobil ve PC sürükleme
-local dragging = false
-local dragInput
-local dragStart
-local startPos
-
-Frame.InputBegan:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseButton1 then
-		dragging = true
-		dragStart = input.Position
-		startPos = Frame.Position
-		input.Changed:Connect(function()
-			if input.UserInputState == Enum.UserInputState.End then
-				dragging = false
-			end
-		end)
-	end
-end)
-
-Frame.InputChanged:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseMovement then
-		dragInput = input
-	end
-end)
-
-UserInputService.InputChanged:Connect(function(input)
-	if input == dragInput and dragging then
-		local delta = input.Position - dragStart
-		Frame.Position = UDim2.new(
-			startPos.X.Scale,
-			startPos.X.Offset + delta.X,
-			startPos.Y.Scale,
-			startPos.Y.Offset + delta.Y
-		)
 	end
 end)
